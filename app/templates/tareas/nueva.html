@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}Crear Nueva Tarea{% endblock %}
+
+{% block content %}
+    <div class="form-container">
+        <h2><i class="fas fa-plus-circle"></i> Crear Nueva Tarea</h2>
+        
+        <form method="POST" action="{{ url_for('tarea.tareas_crear') }}" class="tarea-form">
+            <div class="form-group">
+                <label for="descripcion">
+                    <i class="fas fa-pencil-alt"></i> Descripción de la tarea:
+                </label>
+                <input 
+                    type="text" 
+                    id="descripcion" 
+                    name="descripcion" 
+                    required 
+                    placeholder="Escribe aquí tu tarea..."
+                    autofocus
+                />
+            </div>
+            
+            <div class="form-actions">
+                <button type="submit" class="btn-submit">
+                    <i class="fas fa-save"></i> Guardar Tarea
+                </button>
+                <a href="{{ url_for('tarea.tareas_index') }}" class="btn-cancel">
+                    <i class="fas fa-times"></i> Cancelar
+                </a>
+            </div>
+        </form>
+    </div>
+{% endblock %}

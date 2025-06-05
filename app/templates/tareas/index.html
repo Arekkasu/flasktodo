@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block title %}Lista de Tareas{% endblock %}
+
+{% block content %}
+    <div class="tareas-header">
+        <h2><i class="fas fa-list"></i> Lista de Tareas</h2>
+        <a href="{{ url_for('tarea.tareas_nueva') }}" class="btn-add">
+            <i class="fas fa-plus"></i> Agregar Tarea
+        </a>
+    </div>
+
+    <div class="tareas-container">
+        <ul class="tareas-lista">
+            {% for id, descripcion, completada in algo %}
+                <li class="{{ 'completada' if completada else '' }}" data-id="{{ id }}">
+                    <div class="tarea-contenido">
+                        <span class="tarea-texto">
+                            {% if completada %}
+                                <i class="fas fa-check-circle"></i>
+                            {% else %}
+                                <i class="far fa-circle"></i>
+                            {% endif %}
+                            {{ descripcion }}
+                        </span>
+                        <div class="tarea-acciones">
+                            {% if not completada %}
+                                <button class="btn-completar btn-action" data-action="completar" data-id="{{ id }}">
+                                    <i class="fas fa-check"></i> Completar
+                                </button>
+                            {% else %}
+                                <button class="btn-desmarcar btn-action" data-action="desmarcar" data-id="{{ id }}">
+                                    <i class="fas fa-undo"></i> Desmarcar
+                                </button>
+                            {% endif %}
+                            <button class="btn-eliminar btn-action" data-action="eliminar" data-id="{{id}}">
+                                <i class="fas fa-trash"></i> Eliminar
+                            </button>
+                        </div>
+                    </div>
+                </li>
+            {% else %}
+                <li class="no-tareas">
+                    <i class="fas fa-inbox"></i>
+                    <p>No hay tareas pendientes.</p>
+                    <a href="{{ url_for('tarea.tareas_nueva') }}" class="btn-add">
+                        Crear primera tarea
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- Toast para notificaciones -->
+    <div id="toast" class="toast" role="alert" aria-live="polite" aria-atomic="true">
+        <div class="toast-content">
+            <i class="toast-icon"></i>
+            <span class="toast-message"></span>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/index.js') }}"></script>
+{% endblock %}
